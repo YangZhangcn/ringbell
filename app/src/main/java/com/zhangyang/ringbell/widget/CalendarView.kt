@@ -166,7 +166,7 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
             todayCircleRadius = maxCircleRadius * var1.animatedFraction
             invalidate()
         })
-        animator?.duration = 2000
+        animator?.duration = 1200
         animator?.interpolator = BounceInterpolator()
         animator?.start()
     }

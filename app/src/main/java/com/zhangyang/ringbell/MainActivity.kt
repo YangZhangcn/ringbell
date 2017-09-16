@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
 
-        supportFragmentManager.beginTransaction().replace(R.id.fl_container_main,MainFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fl_container_main,MainFragment(),"main").commit()
     }
 
     override fun onBackPressed() {
@@ -73,6 +73,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+            var mainFragment = supportFragmentManager.findFragmentByTag("main")
+            if (mainFragment == null){
+                mainFragment = MainFragment()
+            }
+            supportFragmentManager.beginTransaction().replace(R.id.fl_container_main,mainFragment,"main")
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
