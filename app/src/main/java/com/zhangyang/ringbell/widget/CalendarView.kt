@@ -52,6 +52,8 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
 
     private var animator: ValueAnimator? = null
 
+    private val week = arrayOf("日","一","二","三","四","五","六")
+
     init {
         rectPaint.color = Color.RED
         rectPaint.style = Paint.Style.STROKE
@@ -106,7 +108,8 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.drawCircle(pointToday.x, pointToday.y, todayCircleRadius, circlePaint)
-        for (cell in cellList) {
+        for (i in 0 until cellList.size) {
+            var cell = cellList.get(i)
             if (cell.isToday){
                 textPaint.color = Color.YELLOW
             }else{
@@ -117,6 +120,8 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
                 canvas?.drawText("" + cell.date[2],
                         (cell.rect!!.left + cell.rect!!.right) / 2,
                         (cell.rect!!.bottom + cell.rect!!.top) / 2 + textHeight / 2, textPaint)
+            }else if (i < 7){
+                canvas?.drawText(week[i],(cell.rect!!.left + cell.rect!!.right) / 2,(cell.rect!!.bottom + cell.rect!!.top) / 2,textPaint)
             }
         }
     }
