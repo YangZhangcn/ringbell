@@ -109,7 +109,7 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         super.onDraw(canvas)
         canvas?.drawCircle(pointToday.x, pointToday.y, todayCircleRadius, circlePaint)
         for (i in 0 until cellList.size) {
-            var cell = cellList.get(i)
+            var cell = cellList[i]
             if (cell.isToday){
                 textPaint.color = Color.YELLOW
             }else{
