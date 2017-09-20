@@ -77,9 +77,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             if (mainFragment == null){
                 mainFragment = MainFragment()
             }
-            supportFragmentManager.beginTransaction().replace(R.id.fl_container_main,mainFragment,"main")
+            supportFragmentManager.beginTransaction().replace(R.id.fl_container_main,mainFragment,"main").commit()
         } else if (id == R.id.nav_gallery) {
-
+            var scrollerFragment = supportFragmentManager.findFragmentByTag("gallery")
+            if (scrollerFragment == null){
+                scrollerFragment = ScrollerTestFragment()
+            }
+            supportFragmentManager.beginTransaction().replace(R.id.fl_container_main,scrollerFragment,"gallery").commit()
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
