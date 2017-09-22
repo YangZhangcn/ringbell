@@ -119,7 +119,7 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
             }
             canvas?.drawRect(cell.rect, rectPaint)
             if (cell.date[0] != 0) {
-                canvas?.drawText("" + cell.date[2],
+                canvas?.drawText( cell.date[2].toString(),
                         (cell.rect!!.left + cell.rect!!.right) / 2,
                         (cell.rect!!.bottom + cell.rect!!.top) / 2 + textHeight / 2, textPaint)
             } else if (i < 7) {
@@ -171,7 +171,7 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         maxCircleRadius = Math.min(cellHeight, cellWidth).toFloat() / 2.5f
         Log.d(TAG, "maxCircleRadius" + maxCircleRadius)
         animator = ObjectAnimator.ofFloat(0f, maxCircleRadius)
-        animator?.addUpdateListener(ValueAnimator.AnimatorUpdateListener() { var1 ->
+        animator?.addUpdateListener( { var1 ->
             todayCircleRadius = maxCircleRadius * var1.animatedFraction
             invalidate()
         })
