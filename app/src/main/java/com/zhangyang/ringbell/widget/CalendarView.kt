@@ -85,6 +85,7 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         animator?.end()
+
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
