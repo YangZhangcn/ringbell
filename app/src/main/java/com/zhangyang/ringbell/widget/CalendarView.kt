@@ -34,7 +34,7 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
     private var circlePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     //行数
-    private val lineNum = 6
+    private val lineNum = 7
     //列数
     private val columnNum = 7
 
@@ -52,14 +52,16 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
 
     private var animator: ValueAnimator? = null
 
-    private val week = arrayOf("日","一","二","三","四","五","六")
+    private val week = arrayOf("日", "一", "二", "三", "四", "五", "六")
+
+    private var titleHeight : Int = 0
 
     init {
         rectPaint.color = Color.RED
         rectPaint.style = Paint.Style.STROKE
         rectPaint.strokeWidth = dpToPx(0.1f, context!!)
 
-        textPaint.textSize = spToPx(18f, context)
+        textPaint.textSize = spToPx(16f, context)
         textPaint.color = Color.GRAY
         textPaint.textAlign = Paint.Align.CENTER
 
@@ -110,18 +112,18 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         canvas?.drawCircle(pointToday.x, pointToday.y, todayCircleRadius, circlePaint)
         for (i in 0 until cellList.size) {
             var cell = cellList[i]
-            if (cell.isToday){
+            if (cell.isToday) {
                 textPaint.color = Color.YELLOW
-            }else{
+            } else {
                 textPaint.color = Color.GRAY
             }
-//            canvas?.drawRect(cell.rect, rectPaint)
-            if (cell.date[0] != 0){
-                canvas?.drawText("" + cell.date[2],
+            canvas?.drawRect(cell.rect, rectPaint)
+            if (cell.date[0] != 0) {
+                canvas?.drawText( cell.date[2].toString(),
                         (cell.rect!!.left + cell.rect!!.right) / 2,
                         (cell.rect!!.bottom + cell.rect!!.top) / 2 + textHeight / 2, textPaint)
-            }else if (i < 7){
-                canvas?.drawText(week[i],(cell.rect!!.left + cell.rect!!.right) / 2,(cell.rect!!.bottom + cell.rect!!.top) / 2,textPaint)
+            } else if (i < 7) {
+                canvas?.drawText(week[i], (cell.rect!!.left + cell.rect!!.right) / 2, (cell.rect!!.bottom + cell.rect!!.top) / 2 + textHeight / 2, textPaint)
             }
         }
     }
@@ -138,17 +140,18 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         val day = calendar.get(Calendar.DAY_OF_MONTH)
         Log.d(TAG, "yearmonthday" + year + month + day)
         Log.d(TAG, "firstDayWeek" + firstDayWeek)
-        val cellWidth = (width - paddingLeft - paddingRight) / columnNum
-        val cellHeight = (height - paddingTop - paddingBottom) / lineNum
+        titleHeight = (height - paddingTop - paddingBottom) / 7
+        val cellWidth = (width - paddingLeft - paddingRight ) / columnNum
+        val cellHeight = (height - paddingTop - paddingBottom - titleHeight) / lineNum
 
         for (j in 0 until lineNum) {
             for (i in 0 until columnNum) {
                 var cell = CalendarCell()
 
                 cell.rect = RectF(cellWidth * i + paddingLeft + lineGap / 2,
-                        cellHeight * j + paddingTop + lineGap / 2,
+                        cellHeight * j + paddingTop + lineGap / 2 + titleHeight,
                         cellWidth * (i + 1) + paddingLeft - lineGap / 2,
-                        cellHeight * (j + 1) + paddingTop - lineGap / 2)
+                        cellHeight * (j + 1) + paddingTop - lineGap / 2 +titleHeight)
                 cellList.add(cell)
             }
         }
@@ -166,10 +169,10 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
             }
         }
 
-        maxCircleRadius = Math.min(cellHeight, cellWidth).toFloat()/2.5f
+        maxCircleRadius = Math.min(cellHeight, cellWidth).toFloat() / 2.5f
         Log.d(TAG, "maxCircleRadius" + maxCircleRadius)
         animator = ObjectAnimator.ofFloat(0f, maxCircleRadius)
-        animator?.addUpdateListener(ValueAnimator.AnimatorUpdateListener() { var1 ->
+        animator?.addUpdateListener( { var1 ->
             todayCircleRadius = maxCircleRadius * var1.animatedFraction
             invalidate()
         })
