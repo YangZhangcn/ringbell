@@ -147,7 +147,6 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         for (j in 0 until lineNum) {
             for (i in 0 until columnNum) {
                 var cell = CalendarCell()
-
                 cell.rect = RectF(cellWidth * i + paddingLeft + lineGap / 2,
                         cellHeight * j + paddingTop + lineGap / 2 + titleHeight,
                         cellWidth * (i + 1) + paddingLeft - lineGap / 2,
