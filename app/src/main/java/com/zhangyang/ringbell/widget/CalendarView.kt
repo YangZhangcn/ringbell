@@ -143,7 +143,6 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         titleHeight = (height - paddingTop - paddingBottom) / 7
         val cellWidth = (width - paddingLeft - paddingRight ) / columnNum
         val cellHeight = (height - paddingTop - paddingBottom - titleHeight) / lineNum
-
         for (j in 0 until lineNum) {
             for (i in 0 until columnNum) {
                 var cell = CalendarCell()
