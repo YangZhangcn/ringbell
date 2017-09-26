@@ -153,7 +153,6 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
                 cellList.add(cell)
             }
         }
-
         val monthDayCount = getMonthDayCount(currentDate[0], currentDate[1])
         for (i in 0 until monthDayCount) {
             if (6 + firstDayWeek + i < cellList.size) {
