@@ -152,6 +152,7 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
                         cellHeight * (j + 1) + paddingTop - lineGap / 2 +titleHeight)
                 cellList.add(cell)
             }
+
         }
         val monthDayCount = getMonthDayCount(currentDate[0], currentDate[1])
         for (i in 0 until monthDayCount) {
