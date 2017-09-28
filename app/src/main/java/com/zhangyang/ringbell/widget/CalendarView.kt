@@ -8,6 +8,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.BounceInterpolator
@@ -110,20 +111,67 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.drawCircle(pointToday.x, pointToday.y, todayCircleRadius, circlePaint)
+        canvas?.drawText(currentDate[0].toString() + "年" + currentDate[1] + "月",width/2f,titleHeight- dpToPx(2f,context),textPaint)
         for (i in 0 until cellList.size) {
             var cell = cellList[i]
             if (cell.isToday) {
-                textPaint.color = Color.YELLOW
+                textPaint.color = Color.WHITE
             } else {
                 textPaint.color = Color.GRAY
             }
-            canvas?.drawRect(cell.rect, rectPaint)
+            if (cell.isChecked){
+                canvas?.drawCircle((cell.rect!!.left + cell.rect!!.right) / 2,(cell.rect!!.bottom + cell.rect!!.top) / 2,maxCircleRadius,rectPaint)
+            }
+//            canvas?.drawRect(cell.rect, rectPaint)
             if (cell.date[0] != 0) {
                 canvas?.drawText( cell.date[2].toString(),
                         (cell.rect!!.left + cell.rect!!.right) / 2,
                         (cell.rect!!.bottom + cell.rect!!.top) / 2 + textHeight / 2, textPaint)
             } else if (i < 7) {
                 canvas?.drawText(week[i], (cell.rect!!.left + cell.rect!!.right) / 2, (cell.rect!!.bottom + cell.rect!!.top) / 2 + textHeight / 2, textPaint)
+            }
+        }
+    }
+
+    var downX : Float = 0f
+
+    var downY : Float = 0f
+
+    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
+        when (event?.action){
+            MotionEvent.ACTION_CANCEL -> return false
+            MotionEvent.ACTION_MOVE -> return false
+        }
+        return super.dispatchTouchEvent(event)
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        when (event?.action){
+            MotionEvent.ACTION_DOWN -> {
+                downX = event.x
+                downY = event.y
+                return true
+            }
+            MotionEvent.ACTION_MOVE -> {
+                return false
+            }
+            MotionEvent.ACTION_UP ->{
+                checkPressPosition()
+                invalidate()
+                return super.onTouchEvent(event)
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                return false
+            }
+        }
+        return super.onTouchEvent(event)
+    }
+
+    private fun checkPressPosition(){
+        for (cell in cellList){
+            if (cell.date[0] != 0){
+                cell.isChecked =(downX > cell.rect!!.left && downX < cell.rect!!.right
+                        && downY > cell.rect!!.top && downY < cell.rect!!.bottom )
             }
         }
     }
@@ -195,6 +243,7 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
     inner class CalendarCell {
         var rect: RectF? = null
         var isToday: Boolean = false
+        var isChecked :Boolean = false
         var date = arrayOf(0, 0, 0)
     }
 
