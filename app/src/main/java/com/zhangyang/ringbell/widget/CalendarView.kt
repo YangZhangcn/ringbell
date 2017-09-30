@@ -150,7 +150,6 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
             MotionEvent.ACTION_DOWN -> {
                 downX = event.x
                 downY = event.y
-
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
