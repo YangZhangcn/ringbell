@@ -143,7 +143,6 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
         }
         return super.dispatchTouchEvent(event)
     }
-
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action){
             MotionEvent.ACTION_DOWN -> {
