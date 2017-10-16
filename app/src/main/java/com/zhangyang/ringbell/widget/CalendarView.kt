@@ -134,6 +134,7 @@ class CalendarView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
     }
 
     var downX : Float = 0f
+
     var downY : Float = 0f
 
     override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
